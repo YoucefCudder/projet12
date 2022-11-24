@@ -1,23 +1,63 @@
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 
 from AppEpic.models import Client, Contract, Event
+from AppEpic.permissions import ClientPermission, ContractPermission, EventPermission
 from AppEpic.serializer import ContractSerializer, EventSerializer, ClientSerializer
 
 
 class ClientViewSet(ModelViewSet):
-    queryset = Client.objects.all()
     serializer_class = ClientSerializer
-    # permission_classes =
+    permission_classes = [IsAuthenticated, ClientPermission]
+
+    def perform_create(self, serializer):
+        # if self.request.user.groups.filter(name="SALES").exists():
+        return serializer.save(sales_contact=self.request.user)
+
+    def get_queryset(self, *args, **kwargs):
+        if self.request.user.groups.filter(name="SALES").exists():
+            return Client.objects.filter(sales_contact=self.request.user)
+
+        if self.request.user.groups.filter(name="SUPPORT").exists():
+            client_id = [event.client.id for event in Event.objects.filter(support_contact=self.request.user)
+                         ]
+            return Client.objects.filter(event__in=client_id)
 
 
 class ContractViewSet(ModelViewSet):
-    queryset = Contract.objects.all()
     serializer_class = ContractSerializer
-    # permission_classes =
-    # filterset_fields = ['sales_contact']
+    permission_classes = [
+        IsAuthenticated,
+        ContractPermission,
+    ]
+    def get_queryset(self, *args, **kwargs):
+        if self.request.user.groups.filter(name="SALES").exists():
+            return Client.objects.filter(sales_contact=self.request.user)
+
+    def perform_create(self, serializer):
+        print(serializer)
+        if self.request.user.groups.filter(name="SALES").exists():
+            return serializer.save(sales_contact=self.request.user)
 
 
 class EventViewSet(ModelViewSet):
-    queryset = Event.objects.all()
     serializer_class = EventSerializer
-    # permission_classes = []
+    permission_classes = [
+        IsAuthenticated,
+        EventPermission,
+    ]
+    def get_queryset(self, *args, **kwargs):
+        if self.request.user.groups.filter(name="SALES").exists():
+            return Client.objects.filter(sales_contact=self.request.user)
+        if self.request.user.groups.filter(name="SUPPORT").exists():
+            event_id = [event.client.id for event in Event.objects.filter(support_contact=self.request.user)
+                         ]
+            return Event.objects.filter(client__in=event_id)
+
+    def perform_create(self, serializer):
+        if self.request.user.groups.filter(name="SUPPORT").exists():
+            return serializer.save(support_contact=self.request.user)
+
+    def perform_update(self, serializer):
+        if self.request.user.groups.filter(name="SUPPORT").exists():
+            return serializer.save(support_contact=self.request.user)

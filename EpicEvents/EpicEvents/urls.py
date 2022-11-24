@@ -18,19 +18,20 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
 import users
-from  AppEpic.views import EventViewSet, ClientViewSet, ContractViewSet
-from users.views import UserViewSet
+from AppEpic.views import EventViewSet, ClientViewSet, ContractViewSet
+from users.views import UserViewSet, GroupViewSet
 
 router = DefaultRouter()
-router.register(r'users', UserViewSet)
-router.register(r'clients', ClientViewSet)
-router.register(r'contracts', ContractViewSet)
-router.register(r'events', EventViewSet)
+router.register(r"users", UserViewSet)
+#
+router.register(r"clients", ClientViewSet, basename='Client')
+router.register(r"contracts", ContractViewSet, basename='Contract')
+router.register(r"events", EventViewSet, basename='Event')
 
+router.register(r"groups", GroupViewSet)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('api/', include(router.urls)),
-    path('', include('users.urls')),
-
+    path("api/", include(router.urls)),
+    path("", include("users.urls")),
 ]
