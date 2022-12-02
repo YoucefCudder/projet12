@@ -1,3 +1,4 @@
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 
@@ -9,6 +10,10 @@ from AppEpic.serializer import ContractSerializer, EventSerializer, ClientSerial
 class ClientViewSet(ModelViewSet):
     serializer_class = ClientSerializer
     permission_classes = [IsAuthenticated, ClientPermission]
+    filter_backends = [DjangoFilterBackend]
+
+    filterset_fields = ['firstname', 'lastname', 'email']
+
 
     def perform_create(self, serializer):
         # if self.request.user.groups.filter(name="SALES").exists():
@@ -30,6 +35,10 @@ class ContractViewSet(ModelViewSet):
         IsAuthenticated,
         ContractPermission,
     ]
+    filter_backends = [DjangoFilterBackend]
+
+    filterset_fields = ['sales_contact']
+
     def get_queryset(self, *args, **kwargs):
         if self.request.user.groups.filter(name="SALES").exists():
             return Client.objects.filter(sales_contact=self.request.user)
@@ -45,6 +54,14 @@ class EventViewSet(ModelViewSet):
     permission_classes = [
         IsAuthenticated,
         EventPermission,
+    ]
+
+    filter_backends = [DjangoFilterBackend]
+    search_fields = [
+        "^contract__client__firstname",
+        "^contract__client__lastname",
+        "^contract__client__email",
+        "^event_date",
     ]
     def get_queryset(self, *args, **kwargs):
         if self.request.user.groups.filter(name="SALES").exists():
