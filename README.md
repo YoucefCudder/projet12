@@ -32,7 +32,7 @@ DATABASE_PORT=5432
 ###
 
 
-**Lancer le projet**
+### **Lancer le projet**
 
 
  1. `python3 manage.py createsuperuser`
