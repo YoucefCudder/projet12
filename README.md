@@ -18,7 +18,7 @@ cd EpicEvents
 
 Installer  [PostgreSQL](https://www.postgresql.org/download/). Suivre la [documentation](https://www.postgresql.org/)  pour installer une base de donnée via pgAdmin4
 
-Créer un fichier .env au sein du projet pour mettre en place les variables d'environnement.
+Créer un fichier .env au sein là où le fichier settings.py se situe pour mettre en place les variables d'environnement.
 
 ````
 SECRET_KEY=django-insecure-4ixvg%9+wi(if7@uwcr%w_sag4y+vc5!zxghco_a3d6kq$o!
