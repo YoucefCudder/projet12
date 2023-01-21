@@ -24,9 +24,9 @@ from users.views import UserViewSet, GroupViewSet
 router = DefaultRouter()
 router.register(r"users", UserViewSet)
 #
-router.register(r"clients", ClientViewSet, basename='Client')
-router.register(r"contracts", ContractViewSet, basename='Contract')
-router.register(r"events", EventViewSet, basename='Event')
+router.register(r"clients", ClientViewSet, basename="Client")
+router.register(r"contracts", ContractViewSet, basename="Contract")
+router.register(r"events", EventViewSet, basename="Event")
 
 router.register(r"groups", GroupViewSet)
 
