@@ -38,6 +38,6 @@ DATABASE_PORT=5432
  1. `python3 manage.py createsuperuser`
  2. `python manage.py migrate`
  3. `python manage.py createsuperuser`
- 4  `python manage.py runserver`
+ 4.  `python manage.py runserver`
  5.  Accès à l'interface d'administration django de l'application à l'URL  [http://127.0.0.1:8000/admin](http://127.0.0.1:8000/admin)
 
