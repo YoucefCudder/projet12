@@ -1,6 +1,12 @@
 # **Projet 12 - EpicEvents**
 *Développement d'un architecture back-end sécurisée en utilisant Django ORM*
 
+
+L'API a deux applications:
+- AppEpic
+- users
+
+
 ### **Télécharger le projet et installer les dépendances**
 **Sous Windows**
 ````
