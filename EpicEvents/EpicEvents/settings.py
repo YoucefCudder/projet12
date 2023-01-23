@@ -176,27 +176,37 @@ SIMPLE_JWT = {
 }
 
 LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "formatters": {
+    'version': 1,
+    'disable_existing_loggers': False,
+
+     "formatters": {
         "format": {
             "format": "{levelname} {module} {message} {asctime}",
             "style": "{",
         },
     },
-    "handlers": {
-        "file": {
-            "level": "ERROR",
-            "class": "logging.FileHandler",
-            "filename": "errors.log",
-            "formatter": "format",
+    'handlers': {
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
         },
+        'django_errors_log_file': {
+            'level': 'ERROR',
+            'class': 'logging.FileHandler',
+            'formatter': 'format',
+            'filename': 'errors.log'
+        },
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'formatter': 'format',
+            'filename': 'logs.log'
+        }
     },
-    "loggers": {
-        "django": {
-            "handlers": ["file"],
-            "level": "ERROR",
-            "propagate": True,
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'django_errors_log_file', 'file'],
+            'level': 'INFO',
         },
     },
 }
