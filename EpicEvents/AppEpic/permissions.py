@@ -38,8 +38,9 @@ class ContractPermission(permissions.BasePermission):
 
     def has_object_permission(self, request, view, obj):
         user = request.user
+
         if user.groups.filter(name="SALES").exists():
-            return True
+            return request.method in ["POST", "GET", "PUT"]
         if user.groups.filter(name__in=["SUPPORT", "MANAGEMENT"]).exists():
             return request.method in permissions.SAFE_METHODS
         else:

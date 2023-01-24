@@ -44,6 +44,7 @@ class RegisterSerializer(serializers.ModelSerializer):
             "last_name",
             "email",
             "password",
+            "is_superuser",
             "is_active",
             "is_staff",
             "groups",

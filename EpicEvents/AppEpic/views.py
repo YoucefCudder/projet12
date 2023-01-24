@@ -4,7 +4,7 @@ from rest_framework.filters import SearchFilter
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 
-from AppEpic.models import Client, Event
+from AppEpic.models import Client, Event, Contract
 from AppEpic.permissions import ClientPermission, ContractPermission, EventPermission
 from AppEpic.serializer import ContractSerializer, EventSerializer, ClientSerializer
 
@@ -46,9 +46,9 @@ class ContractViewSet(ModelViewSet):
             return Client.objects.filter(sales_contact=self.request.user)
 
     def perform_create(self, serializer):
-        print(serializer)
         if self.request.user.groups.filter(name="SALES").exists():
             return serializer.save(sales_contact=self.request.user)
+        
 
 
 class EventViewSet(ModelViewSet):

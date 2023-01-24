@@ -26,17 +26,7 @@ class ClientSerializer(serializers.ModelSerializer):
 class ContractSerializer(serializers.ModelSerializer):
     class Meta:
         model = Contract
-        fields = [
-            "id",
-            "sales_contact",
-            "client",
-            "status",
-            "amount",
-            "payment",
-            "created_at",
-            "updated_at",
-        ]
-
+        fields = "__all__"
 
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
