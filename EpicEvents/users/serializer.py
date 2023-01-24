@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
 from rest_framework.fields import BooleanField
@@ -33,7 +33,6 @@ class RegisterSerializer(serializers.ModelSerializer):
         write_only=True, required=True, validators=[validate_password]
     )
     is_active = serializers.BooleanField(default=True)
-    groups = serializers.CharField(required=True)
     is_staff = BooleanField(label="Staff status", required=True)
 
     class Meta:
@@ -53,18 +52,3 @@ class RegisterSerializer(serializers.ModelSerializer):
             "date_created": {"required": True},
             "date_updated": {"required": True},
         }
-
-    #
-    # def create(self, validated_data):
-    #     user = User.objects.create(
-    #         username=validated_data["username"],
-    #         email=validated_data["email"],
-    #         first_name=validated_data["first_name"],
-    #         last_name=validated_data["last_name"],
-    #     )
-    #     user.groups.set(validated_data["groups"])
-    #     user.set_password(validated_data["password"])
-    #
-    #     user.save()
-    #
-    #     return user
