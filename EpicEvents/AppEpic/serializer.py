@@ -28,11 +28,6 @@ class ContractSerializer(serializers.ModelSerializer):
         model = Contract
         fields = "__all__"
 
-    def validate(self, attrs):
-        if attrs['status'] is False:
-            raise serializers.ValidationError("Client is required")
-        return attrs
-
 
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
@@ -42,6 +37,9 @@ class EventSerializer(serializers.ModelSerializer):
         read_only_fields = ['client']
 
     def validate(self, attrs):
+        print(attrs["contract"])
         if attrs['contract'] is None:
             raise serializers.ValidationError("Contract related is required")
+        if attrs['contract'].status is False:
+            raise serializers.ValidationError("Contract status is not ready yet")
         return attrs
