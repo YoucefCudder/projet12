@@ -47,3 +47,8 @@ class Event(models.Model):
     attendees = models.PositiveIntegerField()
     event_date = models.DateTimeField()
     notes = models.TextField()
+    contract = models.ForeignKey(
+        to=Contract,
+        on_delete=models.CASCADE,
+        null=True,
+    )
