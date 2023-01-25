@@ -31,13 +31,4 @@ class ContractSerializer(serializers.ModelSerializer):
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
-        fields = [
-            "client",
-            "created_at",
-            "updated_at",
-            "support_contact",
-            "event_status",
-            "attendees",
-            "event_date",
-            "notes",
-        ]
+        fields = "__all__"

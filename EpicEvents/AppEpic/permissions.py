@@ -68,7 +68,7 @@ class EventPermission(permissions.BasePermission):
         if user.groups.filter(name="MANAGEMENT").exists():
             return request.method in permissions.SAFE_METHODS
         if user.groups.filter(name="SUPPORT").exists():
-            if user == obj.support_contact and obj.event_status is True:
+            if user == obj.support_contact:
                 return request.method in ["GET", "PUT"]
         else:
             return False

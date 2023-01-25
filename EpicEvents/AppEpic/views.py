@@ -39,16 +39,16 @@ class ContractViewSet(ModelViewSet):
     ]
     filter_backends = [DjangoFilterBackend]
 
-    filterset_fields = ["sales_contact"]
+    filterset_fields = ["sales_contact", "amount", "client__email", "client__lastname", "created_at"]
+
 
     def get_queryset(self, *args, **kwargs):
         if self.request.user.groups.filter(name="SALES").exists():
-            return Client.objects.filter(sales_contact=self.request.user)
+            return Contract.objects.filter(sales_contact=self.request.user)
 
     def perform_create(self, serializer):
         if self.request.user.groups.filter(name="SALES").exists():
             return serializer.save(sales_contact=self.request.user)
-        
 
 
 class EventViewSet(ModelViewSet):
@@ -59,12 +59,9 @@ class EventViewSet(ModelViewSet):
     ]
 
     filter_backends = [SearchFilter, DjangoFilterBackend]
-    search_fields = [
-        "^contract__client__firstname",
-        "^contract__client__lastname",
-        "^contract__client__email",
-        "^event_date",
-    ]
+    filterset_fields = ["event_date", "client__email", "client__lastname"]
+
+
 
     def get_queryset(self, *args, **kwargs):
         if self.request.user.groups.filter(name="SALES").exists():
