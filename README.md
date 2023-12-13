@@ -27,7 +27,7 @@ Installer  [PostgreSQL](https://www.postgresql.org/download/). Suivre la [docume
 Créer un fichier .env au sein là où le fichier settings.py se situe pour mettre en place les variables d'environnement.
 
 ````
-SECRET_KEY=django-insecure-4ixvg%9+wi(if7@uwcr%w_sag4y+vc5!zxghco_a3d6kq$o!
+SECRET_KEY="votre cle secrete"
 DATABASE_NAME= "votre nom de DB"
 DATABASE_USER= "votre nom d'utilisateur postgre"
 DATABASE_PASSWORD="votre mot de passe"
